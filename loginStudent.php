@@ -5,7 +5,7 @@ include_once 'dbconfig.php';
 <html lang="en">
     <head>
         <!-- Title -->
-        <title>New Studennt Intake Login</title>
+        <title>New Student Intake Login</title>
         <!-- Meta -->
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="description" content="">
@@ -36,13 +36,15 @@ include_once 'dbconfig.php';
                 <div class="container no-padding">
                     <div class="row hidden-xs">
                         <div class="col-sm-4 padding-vert-5">
-                            <strong>Phone:</strong>&nbsp;+607-453 7000/7025
+                            <strong>Phone:</strong>
+							<a href="tel:+607-453 7000">&nbsp;+607-453 7000/7025</a>
                         </div>
 						<div class="col-sm-4 text-center padding-vert-5" style="font-size:24px">
                             <strong>UTHM Student DataCard System</strong>&nbsp;
                         </div>
                         <div class="col-sm-4 text-right padding-vert-5">
-                            <strong>Email:</strong>&nbsp;pro@uthm.edu.my
+                            <strong>Email:</strong>
+							<a href="mailto:pro@uthm.edu.my">&nbsp;pro@uthm.edu.my</a>
                         </div>
                     </div>
                 </div>

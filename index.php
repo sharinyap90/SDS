@@ -1,5 +1,5 @@
 <?php
- require_once 'dbconfig.php';
+ require_once "global_vars.php";
 ?>
 
 <!DOCTYPE html>
@@ -37,13 +37,15 @@
                 <div class="container no-padding">
                     <div class="row hidden-xs">
                         <div class="col-sm-4 padding-vert-5">
-                            <strong>Phone:</strong>&nbsp;+607-453 7000/7025
+                            <strong>Phone:</strong>
+							<a href="tel:+607-453 7000">&nbsp;+607-453 7000/7025</a>
                         </div>
 						<div class="col-sm-4 text-center padding-vert-5" style="font-size:24px">
                             <strong>UTHM Student DataCard System</strong>&nbsp;
                         </div>
                         <div class="col-sm-4 text-right padding-vert-5">
-                            <strong>Email:</strong>&nbsp;pro@uthm.edu.my
+                            <strong>Email:</strong>
+							<a href="mailto:pro@uthm.edu.my">&nbsp;pro@uthm.edu.my</a>
                         </div>
                     </div>
                 </div>
@@ -307,19 +309,22 @@
                                 <li data-target="#carousel-example" data-slide-to="0" class="active"></li>
                                 <li data-target="#carousel-example" data-slide-to="1"></li>
                                 <li data-target="#carousel-example" data-slide-to="2"></li>
+                                <li data-target="#carousel-example" data-slide-to="3"></li>
+                                <li data-target="#carousel-example" data-slide-to="4"></li>
+                                <li data-target="#carousel-example" data-slide-to="5"></li>
                             </ol>
                             <div class="clearfix"></div>
                             <!-- End Carousel Indicators -->
                             <!-- Carousel Images -->
                             <div class="carousel-inner">
                                 <div class="item active">
-                                    <img src="assets/img/slideshow/slide1.jpg">
+                                    <img src="assets/img/slideshow/libryUTHM.jpg">
                                 </div>
                                 <div class="item">
-                                    <img src="assets/img/slideshow/slide2.jpg">
+                                    <img src="assets/img/slideshow/UTHM_Entrance2.jpg">
                                 </div>
                                 <div class="item">
-                                    <img src="assets/img/slideshow/slide3.jpg">
+                                    <img src="assets/img/slideshow/grandOpening.jpg">
                                 </div>
                                 <div class="item">
                                     <img src="assets/img/slideshow/slide4.jpg">
@@ -362,7 +367,7 @@
                             <p class="animate fadeIn">New student 2016/2017 Intake please login here</p>
                         </div>
                         <div class="col-md-4 text-center">
-						<a href="login.html">
+						<a href="loginStaff.html">
                             <i class="fa-user fa-4x color-primary animate fadeIn"></i>
                             <h2 class="padding-top-10 animate fadeIn text-primary">Staff Login</h2>
 						</a>

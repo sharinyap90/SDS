@@ -3,7 +3,6 @@ require_once "global_vars.php";
 require_once "vendor/PHPMailer/PHPMailerAutoload.php";
 
 function email($subject, $body, $addresses, $attachments = null) {
-	die("EMAIL X SIAP LAGI. KAU TRY BUAT. REFER PHPMailer gmail");
 
 	$mail = new PHPMailer(); // create a new object
 	$mail->IsSMTP(); // enable SMTP
@@ -11,11 +10,11 @@ function email($subject, $body, $addresses, $attachments = null) {
 	$mail->SMTPAuth = true; // authentication enabled
 	$mail->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for Gmail
 	$mail->Host = "smtp.gmail.com";
-	$mail->Port = 465; // or 587
+	$mail->Port = 587; // or 587
 	$mail->IsHTML(true);
-	$mail->Username = "email@gmail.com";//joey guna account gmail kau
-	$mail->Password = "password";//joey guna account gmail kau
-	$mail->SetFrom("example@gmail.com");//joey guna account gmail kau
+	$mail->Username = "joyceliew92@gmail.com";//joey guna account gmail kau
+	$mail->Password = "31010919";//joey guna account gmail kau
+	$mail->SetFrom("joyceliew92@gmail.com");//joey guna account gmail kau
 	$mail->Subject = $subject;
 	$mail->Body = $body;
 

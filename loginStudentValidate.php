@@ -11,7 +11,7 @@ session_start();
 
     if ($matric && $IC)
     {
-        $connect = mysql_connect(HOST, USER, PASSWORD) or die ("Couldn't connect!");
+        $connect = mysql_connect(HOST, USER) or die ("Couldn't connect!");
 
         mysql_select_db(DBNAME) or die ("Couldn't foound db!");
 

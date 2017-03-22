@@ -11,7 +11,7 @@ $password = "";
 $dbname = "sds";
 
 // Create connection
-$conn = new mysqli(HOST, USER, PASSWORD, DBNAME);
+$conn = new mysqli(HOST, USER, '', DBNAME);
 // Check connection
 if ($conn->connect_error) {
 	die("Connection failed: " . $conn->connect_error);
@@ -53,6 +53,7 @@ if ($result->num_rows > 0) {
 		$marital_status = $row["marital_status"];
 		$oku = $row["oku"];
 		$color_blindness = $row["color_blindness"];
+		$email = $row["email"];
 
 
 	}
@@ -66,34 +67,34 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<!-- Title -->
-	<title>UTHM Student DataCard System</title>
-	<!-- Meta -->
-	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-	<!-- Favicon -->
-	<link href="favicon.ico" rel="shortcut icon">
-	<!-- Bootstrap Core CSS -->
-	<link rel="stylesheet" href="assets/css/bootstrap.css" rel="stylesheet">
-	<link rel="stylesheet" href="bootstrap/css/bootstrap.css" rel="stylesheet">
-	<link rel="stylesheet" href="bootstrap/css/bootstrap.min" rel="stylesheet">
-	<link rel="stylesheet" href="bootstrap/css/bootstrap-theme.css" rel="stylesheet">
-	<link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min" rel="stylesheet">
-	<!-- Template CSS -->
+	<head>
+		<!-- Title -->
+		<title>UTHM Student DataCard System</title>
+		<!-- Meta -->
+		<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+		<!-- Favicon -->
+		<link href="favicon.ico" rel="shortcut icon">
+		<!-- Bootstrap Core CSS -->
+		<link rel="stylesheet" href="assets/css/bootstrap.css" rel="stylesheet">
+		<link rel="stylesheet" href="bootstrap/css/bootstrap.css" rel="stylesheet">
+		<link rel="stylesheet" href="bootstrap/css/bootstrap.min" rel="stylesheet">
+		<link rel="stylesheet" href="bootstrap/css/bootstrap-theme.css" rel="stylesheet">
+		<link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min" rel="stylesheet">
+		<!-- Template CSS -->
 
-	<link rel="stylesheet" href="assets/css/animate.css" rel="stylesheet">
-	<link rel="stylesheet" href="assets/css/font-awesome.css" rel="stylesheet">
+		<link rel="stylesheet" href="assets/css/animate.css" rel="stylesheet">
+		<link rel="stylesheet" href="assets/css/font-awesome.css" rel="stylesheet">
 
-	<link rel="stylesheet" href="assets/css/nexus.css" rel="stylesheet">
-	<link rel="stylesheet" href="assets/css/responsive.css" rel="stylesheet">
-	<link rel="stylesheet" href="assets/css/custom.css" rel="stylesheet">
+		<link rel="stylesheet" href="assets/css/nexus.css" rel="stylesheet">
+		<link rel="stylesheet" href="assets/css/responsive.css" rel="stylesheet">
+		<link rel="stylesheet" href="assets/css/custom.css" rel="stylesheet">
 
-	<!-- Google Fonts-->
-	<link href="http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300" rel="stylesheet" type="text/css">
-</head>
+		<!-- Google Fonts-->
+		<link href="http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300" rel="stylesheet" type="text/css">
+	</head>
 <body>
 <div id="body-bg">
 	<!-- Phone/Email -->
@@ -101,13 +102,15 @@ $conn->close();
 		<div class="container no-padding">
 			<div class="row hidden-xs">
 				<div class="col-sm-4 padding-vert-5">
-					<strong>Phone:</strong>&nbsp;+607-453 7000/7025
+					<strong>Phone:</strong>
+					<a href="tel:+607-453 7000">&nbsp;+607-453 7000/7025</a>
 				</div>
 				<div class="col-sm-4 text-center padding-vert-5" style="font-size:24px">
 					<strong>UTHM Student DataCard System</strong>&nbsp;
 				</div>
 				<div class="col-sm-4 text-right padding-vert-5">
-					<strong>Email:</strong>&nbsp;pro@uthm.edu.my
+					<strong>Email:</strong>
+					<a href="mailto:pro@uthm.edu.my">&nbsp;pro@uthm.edu.my</a>
 				</div>
 			</div>
 		</div>
@@ -167,9 +170,7 @@ $conn->close();
 						}
 						?>
 						<ul id="hornavmenu" class="nav navbar-nav navbar-right">
-							<li style="float:right;"><a
-									href="#">Hello, <?= isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest' ?></a>
-							</li>
+							<li style="float:right;"><a href="#">Hello, <?= isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest' ?></a></li>
 						</ul>
 					</div>
 				</div>
@@ -184,29 +185,38 @@ $conn->close();
 			<div class="row margin-vert-30">
 				<div class="tabs alternative">
 					<ul class="nav nav-tabs">
-						<li class="active">
-							<a href="#personalparticular" data-toggle="tab">Personal Particular</a>
-						</li>
+                        <li class="active">
+                            <a href="#personalparticular" data-toggle="tab">Personal Particular</a>
+                        </li>
+                        <li>
+                            <a href="#academic" data-toggle="tab">Academic</a>
+                        </li>
+                        <li>
+                            <a href="#working" data-toggle="tab">Working Experience</a>
+                        </li>
+                        <li>
+                            <a href="#parent_guardian" data-toggle="tab">Parents/Guardian</a>
+                        </li>
 						<li>
-							<a href="#academic" data-toggle="tab">Academic</a>
-						</li>
-						<li>
-							<a href="#working" data-toggle="tab">Working Experience</a>
-						</li>
-						<li>
-							<a href="#parent_guardian" data-toggle="tab">Parents/Guardian</a>
-						</li>
-					</ul>
+                            <a href="#declaration" data-toggle="tab">Declaration</a>
+                        </li>
+                    </ul>
 					<div class="col-md-10 col-md-offset-1 col-sm-offset-3">
 						<div class="tab-content">
 							<div class="tab-pane fade in active" id="personalparticular">
 								<form id="personalparticular" method="post" class="form-horizontal" action="">
+								
+									<div class="login-header margin-bottom-30">
+												<center><h2>Section A1: Personal Particulars</h2>
+									</div>
+									<hr>
+									
 									<div class="form-group">
 										<label class="col-sm-3 control-label">Name</label>
 										<div class="col-sm-7">
 											<input type="text" class="form-control" id="name" required
 											       data-parsley-pattern="^[a-zA-Z ]+$" placeholder="Full Name"
-											       name="fullname" value="<?php echo $name; ?>" readonly/>
+											       name="fullname" value="<?php echo $name; ?>" readonly />
 										</div>
 									</div>
 
@@ -215,13 +225,13 @@ $conn->close();
 										<div class="col-sm-3">
 											<input type="text" class="form-control" name="ic" required
 											       data-parsley-type="number" placeholder="901212011234"
-											       value="<?php echo $ic; ?>" readonly/>
+											       value="<?php echo $ic; ?>" readonly />
 										</div>
 										<label class="col-sm-1 control-label">Matric&nbsp;No.</label>
 										<div class="col-sm-3">
 											<input type="text" class="form-control" name="matric" required
 											       data-parsley-type="number" placeholder="ab160001"
-											       value="<?php echo $matric; ?>" readonly/>
+											       value="<?php echo $matric; ?>" readonly />
 										</div>
 									</div>
 
@@ -230,7 +240,7 @@ $conn->close();
 										<div class="col-sm-7">
 											<input type="text" class="form-control" name="program" required
 											       data-parsley-pattern="^[a-zA-Z ]+$" placeholder=""
-											       value="<?php echo $program; ?>" readonly/>
+											       value="<?php echo $program; ?>" readonly />
 										</div>
 									</div>
 
@@ -239,13 +249,22 @@ $conn->close();
 										<div class="col-sm-7">
 											<input type="text" class="form-control" name="faculty" required
 											       data-parsley-pattern="^[a-zA-Z ]+$" placeholder=""
-											       value="<?php echo $faculty; ?>" readonly/>
+											       value="<?php echo $faculty; ?>" readonly />
 										</div>
 									</div>
 								</form>
-								<form id="personalparticular" action="studentRegisterValidate.php" method="POST"
-								      class="form-horizontal">
+								<form id="personalparticular" action="studentRegisterValidate.php" method="POST" class="form-horizontal">
 									<input type="hidden" name="stud_id" value="<?= $stud_id ?>"/>
+									
+									<div class="form-group">
+										<label class="col-sm-3 control-label">Email</label>
+										<div class="col-sm-7">
+											<input type="text" class="form-control" name="email" required
+											       data-parsley-type="email" placeholder="example@gmail.com"
+											       value="<?php echo $email; ?>" />
+										</div>
+									</div>
+									
 									<div class="form-group">
 										<label class="col-sm-3 control-label">Gender</label>
 										<div class="col-sm-7">
@@ -256,11 +275,11 @@ $conn->close();
 
 
 												<input type="radio" name="gender" value="Male" required
-												       data-parsley-required="true" <?= strtolower($gender) == "male" ? 'checked' : '' ?> >Male
+												       data-parsley-required="true" <?= strtolower($gender) == "male" ? 'checked' : '' ?> />Male
 											</label>
 											<label class="radio-inline">
 												<input type="radio" name="gender"
-												       value="Female" <?= strtolower($gender) == "female" ? 'checked' : '' ?>>Female
+												       value="Female" <?= strtolower($gender) == "female" ? 'checked' : '' ?>/>Female
 											</label>
 										</div>
 									</div>
@@ -268,8 +287,7 @@ $conn->close();
 									<div class="form-group">
 										<label class="col-sm-3 control-label">Date of Birth</label>
 										<div class="col-sm-3">
-											<input type="date" class="form-control" name="date_of_birth" required
-											       data-parsley-pattern="^[a-zA-Z ]+$" placeholder=""
+											<input type="date" class="form-control" name="date_of_birth" required placeholder=""
 											       value="<?= $date_of_birth ?>"/>
 										</div>
 									</div>
@@ -281,7 +299,7 @@ $conn->close();
 											       data-parsley-pattern="^[a-zA-Z ]+$" placeholder=""
 											       value="<?php echo $race; ?>"/>
 										</div>
-										<label class="col-sm-1 control-label">Religion</label>
+										<label class="col-sm-2 control-label">Religion</label>
 										<div class="col-sm-3">
 											<input type="text" name="religion" class="form-control" required
 											       data-parsley-pattern="^[a-zA-Z ]+$" placeholder=""
@@ -312,7 +330,7 @@ $conn->close();
 												?>
 											</select>
 										</div>
-										<label class="col-sm-1 control-label">State of Residence</label>
+										<label class="col-sm-2 control-label">State of Residence</label>
 										<div class="col-sm-3">
 											<input type="text" name="state_of_residence" class="form-control" required
 											       data-parsley-pattern="^[a-zA-Z ]+$" placeholder=""
@@ -328,13 +346,11 @@ $conn->close();
 												       name="oku" value="Yes"
 												       required
 												       data-parsley-required="true"
-													<?= strtolower($oku) == 'yes' ? 'checked' : '' ?>
-													   onChange="findselected()">Yes
+													<?= strtolower($oku) == 'yes' ? 'checked' : '' ?> onChange="findselected()">Yes
 											</label>
 											<label class="radio-inline">
-												<input id="oku_no" type="radio" name="oku"
+												<input id="oku_no" type="radio" name="oku"  value="No"
 													<?= strtolower($oku) == 'no' ? 'checked' : '' ?>
-													   value="No"
 													   onChange="findselected()">No
 											</label>
 										</div>
@@ -362,15 +378,15 @@ $conn->close();
 									<div class="form-group">
 										<label class="col-sm-3 control-label">Marital Status</label>
 										<div class="col-sm-3">
-											<select class="form-control" name="martial_status" required>
+											<select class="form-control" name="marital_status" required>
 												<?php
-												foreach ($marital_statuses as $key => $status) {
+													foreach ($marital_statuses as $key => $status) {
 													$selected = "";
 													if ($status == $marital_status)
 														$selected = 'selected';
 													echo "<option value='$key' $selected>$status</option>";
-												}
-												?>
+													}
+													?>
 											</select>
 										</div>
 									</div>
@@ -380,10 +396,13 @@ $conn->close();
 										<div class="col-sm-7">
 											<label class="radio-inline col-sm-2">
 												<input id="oku_yes" type="radio" name="color_blindness" value="Yes"
-												       required data-parsley-required="true" onChange="findselected()">Yes
+												       required data-parsley-required="true"
+														<?= strtolower($oku) == 'yes' ? 'checked' : '' ?>
+													   onChange="findselected()">Yes
 											</label>
 											<label class="radio-inline">
 												<input id="oku_no" type="radio" name="color_blindness" value="No"
+												<?= strtolower($oku) == 'no' ? 'checked' : '' ?>
 												       onChange="findselected()">No
 											</label>
 										</div>
@@ -391,9 +410,8 @@ $conn->close();
 
 									<div class="form-group">
 										<label class="col-sm-3 control-label">Permanent Address</label>
-										<div class="col-sm-6">
-											<textarea required class="form-control" name="address" "
-											><?php echo $address; ?></textarea>
+										<div class="col-sm-8">
+											<textarea required class="form-control" name="address" > <?php echo $address; ?></textarea>
 										</div>
 									</div>
 
@@ -404,10 +422,10 @@ $conn->close();
 											       data-parsley-type="number" placeholder=""
 											       value="<?php echo $poscode; ?>">
 										</div>
-										<label class="col-sm-1 control-label">State</label>
+										<label class="col-sm-2 control-label">State</label>
 										<div class="col-sm-3">
 											<input id="inputtext" type="text" class="form-control" name="state" required
-											       data-parsley-pattern="^[a-zA-Z ]+$" placeholder="none"
+											       data-parsley-pattern="^[a-zA-Z ]+$" placeholder=""
 											       value="<?php echo $state; ?>"/>
 										</div>
 									</div>
@@ -419,18 +437,19 @@ $conn->close();
 											       data-parsley-type="number" placeholder="071234567"
 											       value="<?php echo $tel_no; ?>"/>
 										</div>
-										<label class="col-sm-1	control-label">Mobile No.</label>
+										<label class="col-sm-2	control-label">Mobile No.</label>
 										<div class="col-sm-3">
 											<input type="text" class="form-control" name="hp_no" required
 											       data-parsley-type="number" placeholder="01234567890"
 											       value="<?php echo $hp_no; ?>"/>
 										</div>
 									</div>
-
+									<hr>
+									
 									<div class="form-group">
-										<div class="col-sm-offset-3 col-sm-9 m-t-15">
+										<div class="col-sm-offset-3 col-sm-9 m-t-15" style="margin:10px 0 0 0; float:right;">
 											<button type="submit" name="submit" class="btn btn-primary">Submit</button>
-											<button type="reset" class="btn btn-default m-l-5">Cancel</button>
+											<button type="reset" class="btn btn-default m-l-5" style="margin:0 0 0 20px;">Cancel</button>
 										</div>
 									</div>
 
@@ -439,18 +458,24 @@ $conn->close();
 							</div>
 							<div class="tab-pane fade in" id="academic">
 								<form id="academic" method="post" class="form-horizontal" action="academicAdd.php">
+									<div class="login-header margin-bottom-30">
+												<center><h2>Section A2: Academic Background</h2>
+												<br/>
+												<h3>SPM OR ITS EQUIVALENT</h3>
+									</div>
+									<hr>
 									<div class="form-group">
 										<label class="col-sm-3 control-label">SPM No.</label>
 										<div class="col-sm-7">
 											<input type="text" class="form-control" name="spm_no" required
-											       data-parsley-pattern="^[a-zA-Z ]+$" placeholder="SPM Nnumber"/>
+											       data-parsley-pattern="^[a-zA-Z ]+$" placeholder="HJ006A005"/>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label class="col-sm-3	control-label">Year of Exam</label>
 										<div class="col-sm-3">
-											<input type="text" name="year_of_exam" class="form-control"/>
+											<input type="text" name="year_of_exam" class="form-control" required/>
 										</div>
 									</div>
 
@@ -458,7 +483,7 @@ $conn->close();
 										<label class="col-sm-3 control-label">Stream Type</label>
 										<div class="col-sm-7">
 											<input type="text" class="form-control" name="stream_type" required
-											       data-parsley-pattern="^[a-zA-Z ]+$" placeholder=""/>
+											       data-parsley-pattern="^[a-zA-Z ]+$" placeholder="Science Stream"/>
 										</div>
 									</div>
 
@@ -467,53 +492,195 @@ $conn->close();
 									<div class="form-group">
 										<label class="col-sm-3 control-label">Name of School</label>
 										<div class="col-sm-7">
-											<input type="text" class="form-control" name="name_of_school" required
-											       data-parsley-pattern="^[a-zA-Z ]+$" placeholder=""/>
+											<input type="text" class="form-control" name="name_of_school" required placeholder=""/>
 										</div>
 									</div>
-
+									<hr>
 
 									<div class="form-group">
-										<div class="col-sm-offset-3 col-sm-9 m-t-15">
+										<div class="col-sm-offset-3 col-sm-9 m-t-15" style="margin:10px 0 0 0; float:right;">
 											<button class="btn btn-primary" type="submit" name="submit">Submit</button>
-											<button type="reset" class="btn btn-default m-l-5">Cancel</button>
+											<button type="reset" class="btn btn-default m-l-5" style="margin:0 0 0 20px;">Cancel</button>
 										</div>
 									</div>
 
 								</form>
-
 							</div>
+							
 							<div class="tab-pane fade in" id="working">
-								<div class="row">
-									<div class="col-md-5">
-										<img src="assets/img/fillers/filler3.jpg" alt="filler image">
-									</div>
-									<div class="col-md-7">
-										<h3 class="no-margin no-padding">Mirum Est Notare</h3>
-										<p>Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum
-											claritatem. Investigationes demonstraverunt lectores legere me lius quod ii
-											legunt saepius. Claritas est etiam processus dynamicus,
-											qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera
-											gothicas.</p>
-									</div>
-								</div>
+								<form id="working" method="post" class="form-horizontal" >
+											
+											<div class="login-header margin-bottom-30">
+												<center><h2>Section A3: Working Experience & Co-Curricular Activities</h2>
+												<br/>
+												<h3>WORKING EXPERIENCE</h3>
+											</div>
+											
+											<hr>
+											
+											<div class="form-group">											
+											<div  class="table-responsive">
+											<div class="col-sm-12">
+											<table id="add" class="table table-striped table-bordered table-hover" style="table-layout:auto">
+												<thead>
+													<tr>
+													<th scope="col">Designation</th>
+													<th scope="col">Company Name</th>
+													<th scope="col">Company Address</th>
+													<th scope="col">Start Date</th>
+													<th scope="col">End Date</th>
+													</tr>
+													</thead>
+													<tbody>
+													<tr>
+													<td><input name="designation" type="text" id="designation"/></td>
+													<td><input name="companyName" type="text" id="company name"/></td>
+													<td><input name="address" type="text" id="adress"/></td>		
+													<td><input name="stardate" type="date" id="startdate"/></td>	
+													<td><input name="enddate" type="date" id="enddate"/></td>	 
+													</tr>
+													</tbody>
+											</table>
+											<button class="btn btn-primary" name="add" onclick='addRow();' style="clear:both; float:right; margin:10px 0 0 180%;">Add</button>
+											</div>
+											</div>
+											</div>
+											<hr>
+
+											<div class="form-group">
+											 <div class="col-sm-offset-8 col-sm-9 m-t-15" style="margin:10px 0 0 0; float:right;">
+											 <button type="submit" name = "submit" class="btn btn-primary">Submit</button>
+											 <button type="reset" class="btn btn-default m-1-5" style="margin:0 0 0 20px;">Cancel</button>
+											 </div>
+											</div>	 
+										</form>
 							</div>
 							<div class="tab-pane fade in" id="parent_guardian">
-								<p>Vivamus imperdiet condimentum diam, eget placerat felis consectetur id. Donec eget
-									orci metus, Vivamus imperdiet condimentum diam, eget placerat felis consectetur id.
-									Donec eget orci metus, ac adipiscing nunc. Pellentesque
-									fermentum, ante ac interdum ullamcorper. Donec eget orci metus, ac adipiscing nunc.
-									Pellentesque fermentum, consectetur id.</p>
-								<ul>
-									<li>Donec eget orci metus</li>
-									<li>Ante ac interdum ullamcorper</li>
-									<li>Vivamus imperdiet condimentum</li>
-									<li>Pellentesque fermentum</li>
-								</ul>
+								<form id="parent_guardian" method="post" class="form-horizontal">											
+											<div class="login-header margin-bottom-30">
+												<center><h2>Section B: Parents/Guardian</h2>
+												<br/>
+												<h3>FATHER/MOTHER/GUARDIAN</h3>
+											</div>
+											<hr>	
+											<input type="hidden"  name = "matric2"  value = "<?php echo $matric; ?>" />
+											
+											<div class="form-group">
+											 <label class="col-sm-3 control-label">Father's Name</label>
+											 <div class="col-sm-7">
+											 <input type="text" class="form-control" name = "father" placeholder="Full Name"  />
+											 </div>
+											</div>
+											
+											<div class="form-group">
+											 <label class="col-sm-3	control-label">Identity Card (NRIC)</label>
+											 <div class="col-sm-3">
+											 <input type="text" name = "fatherNRIC" class="form-control" />
+											 </div>
+											</div>	
+
+											<div class="form-group">
+											 <label class="col-sm-3 control-label">Occupation</label>
+											 <div class="col-sm-7">
+											 <input type="text" class="form-control" name = "fatherWork" placeholder="" />
+											 </div>
+											</div>
+											
+											<hr>
+											<div class="form-group">
+											 <label class="col-sm-3 control-label">Mother's Name</label>
+											 <div class="col-sm-7">
+											 <input type="text" class="form-control" name = "mother" placeholder="Full Name"  />
+											 </div>
+											</div>
+											
+											<div class="form-group">
+											 <label class="col-sm-3	control-label">Identity Card (NRIC)</label>
+											 <div class="col-sm-3">
+											 <input type="text" name = "motherNRIC" class="form-control" />
+											 </div>
+											</div>	
+
+											<div class="form-group">
+											 <label class="col-sm-3 control-label">Occupation</label>
+											 <div class="col-sm-7">
+											 <input type="text" class="form-control" name = "motherWork" placeholder="" />
+											 </div>
+											</div>
+											
+											<hr>
+											<div class="form-group">
+											 <label class="col-sm-3 control-label">Guardian's Name</label>
+											 <div class="col-sm-7">
+											 <input type="text" class="form-control" name = "guardian" placeholder="Full Name"  />
+											 </div>
+											</div>
+											
+											<div class="form-group">
+											 <label class="col-sm-3	control-label">Identity Card (NRIC)</label>
+											 <div class="col-sm-3">
+											 <input type="text" name = "guardianNRIC" class="form-control" />
+											 </div>
+											</div>	
+
+											<div class="form-group">
+											 <label class="col-sm-3 control-label">Occupation</label>
+											 <div class="col-sm-7">
+											 <input type="text" class="form-control" name = "guardianWork" placeholder="" />
+											 </div>
+											</div>
+											<hr>
+
+											<div class="form-group">
+											 <div class="col-sm-offset-8 col-sm-9 m-t-15" style="margin:10px 0 0 0; float:right;">
+											 <button type="submit" name = "submit" class="btn btn-primary">Submit</button>
+											 <button type="reset" class="btn btn-default m-1-5" style="margin:0 0 0 20px;">Cancel</button>
+											 </div>
+											</div>	 
+								</form>	
 							</div>
+							
+							<div class="tab-pane fade in" id="declaration">
+                                        <form id="declaration" method="post" class="form-horizontal" >
+											
+											<div class="login-header margin-bottom-30">
+												<center><h2>Declaration And Amendments of Information</h2>
+											</div>
+											
+											<hr>
+											<div class="form-group">
+											<div class="panel panel-success">
+												  <div class="panel-heading"><strong>Declaration And Amendments of Information</strong></div>
+												<div class="panel-body">
+												<input type="checkbox" required/>
+													I declare that all statements and details entered in this form are true. I will inform the University of any changess in the information.
+													I am liable for any consequences of my failure to do so. 
+												
+												  <br/><br/>
+													<center><div class="well" class="form-group">	
+													 <label>DATE</label>
+													 <input type="text" value="<?=date("d/m/y")?>" class="form-control"  style="width:30%;" required/>
+													 </div>
+													 <hr>
+													<p style="float:right"> **This is a computer generated document no signature is needed **</p>
+												</div>
+												  
+											</div>
+											</div>
+											<hr>
+
+											<div class="form-group">
+											 <div class="col-sm-offset-8 col-sm-9 m-t-15" style="margin:10px 0 0 0; float:right;">
+											 <button type="submit" name = "submit" class="btn btn-primary">Submit</button>
+											 <button type="reset" class="btn btn-default m-1-5" style="margin:0 0 0 20px;">Cancel</button>
+											 </div>
+											</div>	 
+										</form>	
+                            </div>
+							
 						</div>
 					</div>
-				</div
+				</div>
 			</div>
 		</div>
 	</div>

@@ -1,4 +1,6 @@
 <?php
+require_once "global_vars.php";
+
 session_start();
 
 	if(!isset($_POST['adminUsername']))
@@ -10,9 +12,9 @@ session_start();
 
     if ($username && $password)
     {
-        $connect = mysql_connect(HOST, USER, PASSWORD) or die ("Couldn't connect!");
+        $connect = mysql_connect(HOST, USER, '') or die ("Couldn't connect!");
 
-        mysql_select_db(DBNAME) or die ("Couldn't foound db!");
+        mysql_select_db(DBNAME) or die ("Couldn't find db!");
 
         $query = mysql_query("SELECT * FROM admin WHERE userName = '$username'");
 

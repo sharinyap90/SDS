@@ -9,9 +9,9 @@ session_start();
 		//var $db_tableName;
 		/*$dbhost = "localhost";
 		$dbuser = "root";
-		$dbpass = "password";
+		$dbpass = "";
 		$dbname = "sds";*/
 
-		$conn = mysql_connect(HOST,USER,PASSWORD) or die('cannot connect to the server');
+		$conn = mysql_connect(HOST,USER,'') or die('cannot connect to the server');
 		mysql_select_db(DBNAME) or die('database selection problem');
 ?>

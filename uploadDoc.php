@@ -1,5 +1,7 @@
 <?php
-include_once 'dbconfig.php';
+require_once "global_vars.php";
+
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -39,13 +41,15 @@ include_once 'dbconfig.php';
                 <div class="container no-padding">
                     <div class="row hidden-xs">
                         <div class="col-sm-4 padding-vert-5">
-                            <strong>Phone:</strong>&nbsp;+607-453 7000/7025
+                            <strong>Phone:</strong>
+							<a href="tel:+607-453 7000">&nbsp;+607-453 7000/7025</a>
                         </div>
 						<div class="col-sm-4 text-center padding-vert-5" style="font-size:24px">
                             <strong>UTHM Student DataCard System</strong>&nbsp;
                         </div>
                         <div class="col-sm-4 text-right padding-vert-5">
-                            <strong>Email:</strong>&nbsp;pro@uthm.edu.my
+                            <strong>Email:</strong>
+							<a href="mailto:pro@uthm.edu.my">&nbsp;pro@uthm.edu.my</a>
                         </div>
                     </div>
                 </div>
@@ -118,38 +122,58 @@ include_once 'dbconfig.php';
                     <div class="row margin-vert-30">
 					<!--Upload Document-->
 					<div class="col-md-10 col-md-offset-1 col-sm-offset-3">
-						<form class="signup-page form-horizontal" action="upload.php" method="post" enctype="multipart/form-data">
-							<div class="form-group">
-								<label class="col-sm-4 control-label">Background Information</label>
-								
-								<div class="col-sm-7">
-									<input type="file" name="file" />
-									<br/>
-									<div class="row">
-										<div class="col-lg-8 text-right">
-										<button type="submit" name="btn-upload" class="btn btn-primary btn-success">upload</button>
-										</div>
-									</div>
-                                </div>
-							</div>
-						</form>
-					
-						<br /><br />
-						<?php
-						if(isset($_GET['success']))
-						{
-							?>
-							<label>File Uploaded Successfully...  <a href="view.php">click here to view file.</a></label>
-							<?php
-						}
-						else if(isset($_GET['fail']))
-						{
-							?>
-							<label>Problem While File Uploading !</label>
-							<?php
-						}
 						
-						?>
+						<form class="signup-page form-horizontal" action="upload.php" method="post" enctype="multipart/form-data">
+							
+							<div class="row">
+							<div class="form-group">
+							<center><h2>Your Certificates Upload</h2>
+							
+							<hr>
+
+							<div class="col-sm-10 form-control" style="width:60%; margin:0 0 0 15pt;">
+							<center><input type="file" name="file" class="col-sm-10 " />
+							<br/><br/>
+							<button type="reset" class="btn btn-default m-1-5" style="margin:0 0 0 15pt; float:right;">Cancel</button>
+							<button type="submit" name="btn-upload" class=" btn btn-success text-left" style="float:right;">upload</button>
+							</div>
+							</div>
+							
+							<br/><br/>
+							<div class="panel panel-success">
+								<div class="panel-heading">Please Note:</div>
+								<div class="panel-body">
+									Please bring along with you the <strong> ORIGINAL CERTIFICATES </strong>(birth certificate, identity card, SPM/STPM/Matriculation/ Diploma or any
+									equivalent transcript, MUET transcript and all
+								</div>
+													  
+							</div>
+							</div>
+							
+						</form>
+
+						<br /><br />
+							<?php
+							if(isset($_GET['success']))
+							{
+								?>
+								<label>File Uploaded Successfully...  <a href="view.php">click here to view file.</a></label>
+								<?php
+							}
+							else if(isset($_GET['fail']))
+							{
+								?>
+								<label>Problem While File Uploading !</label>
+								<?php
+							}
+							else
+							{
+								?>
+								<label>Try to upload any files(PDF, DOC, EXE, VIDEO, MP3, ZIP,etc...)</label>
+								<?php
+							}
+							?>
+						
 					</div>
 					
 					</div>
@@ -240,15 +264,7 @@ include_once 'dbconfig.php';
                 </div>
             </div>
             <!-- End Footer -->
-                        <!-- Copyright -->
-                        <div id="copyright" class="col-md-4">
-                            <p class="pull-right">(c) 2014 Your Copyright Info</p>
-                        </div>
-                        <!-- End Copyright -->
-                    </div>
-                </div>
-            </div>
-            <!-- End Footer -->
+
             <!-- JS -->
             <script type="text/javascript" src="assets/js/jquery.min.js" type="text/javascript"></script>
             <script type="text/javascript" src="assets/js/bootstrap.min.js" type="text/javascript"></script>

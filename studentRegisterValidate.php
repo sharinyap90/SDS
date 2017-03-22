@@ -11,7 +11,7 @@ $password = '';
 $dbname = "sds";
 
 // Create connection
-$conn = new mysqli(HOST, USER, PASSWORD, DBNAME);
+$conn = new mysqli(HOST, USER, '', DBNAME);
 // Check connection
 if ($conn->connect_error) {
 	die("Connection failed: " . $conn->connect_error);
@@ -31,15 +31,16 @@ if (isset($_POST['submit'])) {
 	$oku = $_POST['oku'];
 	$type_of_dissability = $_POST['type_of_dissability'];
 	$height = $_POST['height'];
-	$martial_status = $_POST['martial_status'];
+	$marital_status = $_POST['marital_status'];
 	$color_blindness = $_POST['color_blindness'];
 	$address = $_POST['address'];
 	$poscode = $_POST['poscode'];
 	$state = $_POST['state'];
 	$tel_no = $_POST['tel_no'];
 	$hp_no = $_POST['tel_no'];
+	$email = $_POST['email'];
 
-	$sql = "UPDATE student SET gender = '$gender', date_of_birth = '$date_of_birth', race = '$race', religion = '$religion', state_of_birth = '$state_of_birth',  citizenship = '$citizenship', state_of_residence = '$state_of_residence', oku = '$oku', type_of_dissability = '$type_of_dissability', height = '$height', marital_status ='$martial_status', color_blindness = '$color_blindness', address = '$address', poscode='$poscode', state='$state', tel_no = '$tel_no', hp_no = '$hp_no' WHERE matric_no = '$username'";
+	$sql = "UPDATE student SET gender = '$gender', date_of_birth = '$date_of_birth', race = '$race', religion = '$religion', state_of_birth = '$state_of_birth',  citizenship = '$citizenship', state_of_residence = '$state_of_residence', oku = '$oku', type_of_dissability = '$type_of_dissability', height = '$height', marital_status ='$marital_status', color_blindness = '$color_blindness', address = '$address', poscode='$poscode', state='$state', tel_no = '$tel_no', hp_no = '$hp_no', email = '$email' WHERE matric_no = '$username'";
 
 	if ($conn->query($sql) === true) {
 		$results = $conn->query("SELECT * FROM student WHERE matric_no = '$username'");
@@ -58,7 +59,7 @@ if (isset($_POST['submit'])) {
 		//generate QRCode based on the json data
 		$path = "assets/img/qrcodes/$username.png";
 		QRcode::png($data_arr, $path);//save qrcode to path
-		email("Registration", "Your registration has been recorded (Refer attachment). Please bring your QRCode for out reference.", ["sharinyap@gmail.com"], [$path]);
+		email("[TAJUK EMAIL]", "[TEMPAT KO NAK MEMBEBEL]", ["$email"], [$path]);
 
 		echo "<script>alert(\"Successfully Save Entry!\");</script>";
 		echo "<script>window.location.assign('studentRegister.php');</script>";

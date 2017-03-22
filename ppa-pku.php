@@ -1,12 +1,42 @@
 <?php
-include_once 'dbconfig.php';
+	session_start();
+	
+	$matric = $_SESSION["username"];
+	
+	$servername = "localhost";
+	$username = "root";
+	$password = "";
+	$dbname = "sds";
+	
+	// Create connection
+	$conn = new mysqli($servername, $username, $password, $dbname);
+	// Check connection
+	if ($conn->connect_error) {
+		die("Connection failed: " . $conn->connect_error);
+	} 
+	$sql = "SELECT * FROM student WHERE matric_no = '$matric'";
+	$result = $conn->query($sql);
+	if ($result->num_rows > 0) {
+		// output data of each row
+		while($row = $result->fetch_assoc()) {
+			$name= $row["fullname"];
+			$ic= $row["nric"];
+			$matric= $row["matric_no"];
+			$program= $row["program"];
+			$faculty= $row["faculty"];
+			
+		}
+	} else {
+		//echo "0 results";
+	}
+	$conn->close();
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <!-- Title -->
-        <title>Add Student</title>
+        <title>UTHM Student DataCard System</title>
         <!-- Meta -->
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="description" content="">
@@ -75,21 +105,28 @@ include_once 'dbconfig.php';
                         <div class="col-md-12 no-padding">
                             <div class="visible-lg">
                                 <ul id="hornavmenu" class="nav navbar-nav">
-                                    <li>
-                                        <a href="adminIndex.php" class="fa-home">Home</a>
-                                    </li>                                    
-                                    <li>
-                                        <a href="addStaff.php" class="fa-plus-square">Add Staff</a>
+									<li>
+                                        <a href="ppaIndex.php" class="fa-home">Student Profile</a>
                                     </li>
 									<li>
-                                        <a href="addStudent.php" class="fa-plus-square  active">Add Student</a>
+                                        <a href="ppa-pku.php" class="fa-home  active">PKU Profile</a>
                                     </li>
+									<li>
+                                        <a href="ppa-bursary.php" class="fa-home">Bursary Profile</a>
+                                    </li>
+									<li>
+                                        <a href="ppa-register.php" class="fa-home">Enrollment</a>
+                                    </li>
+									<li>
+                                        <a href="report.php" class="fa-home">Report</a>
+                                    </li>   
                                 </ul>
+								
 								<?php 
 								if(isset($_SESSION['user'])){
 									?>
 									<ul id="hornavmenu" class="nav navbar-nav navbar-right">
-									<li><a href="logoutAdmin.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+									<li><a href="logoutStudent.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 									</ul>
 								<?php
 								}else{
@@ -99,10 +136,10 @@ include_once 'dbconfig.php';
 									</ul>
 								<?php
 									}
-							?>
-							<ul id="hornavmenu" class="nav navbar-nav navbar-right">
-							<li style="float:right;"><a href="#">Hello, <?=isset($_SESSION['username'])? $_SESSION['username'] : 'Guest' ?></a></li>
-							</ul>
+								?>
+								<ul id="hornavmenu" class="nav navbar-nav navbar-right">
+								<li style="float:right;"><a href="#">Hello, <?=isset($_SESSION['username'])? $_SESSION['username'] : 'Guest' ?></a></li>
+								</ul>
                             </div>
                         </div>
                     </div>
@@ -114,72 +151,62 @@ include_once 'dbconfig.php';
             <div id="content">
                 <div class="container background-white">
                     <div class="row margin-vert-30">
-						<!-- Add New Student -->
-                        <div class="col-md-10 col-md-offset-1 col-sm-offset-3">
-                            <form class="signup-page form-horizontal" action = "addStudentDB.php" method = 'POST'>
-                                <div class="signup-header">
-                                    <center><h2>Add New Student</h2></center>
-									<hr>    
-								</div>
+						<div class="tabs alternative">
+						<div class="col-md-10 col-md-offset-1 col-sm-offset-3">
+						<div class="tab-content">
+						<form id="personalparticular" method="post" class="form-horizontal" >
+											
+											<div class="login-header margin-bottom-30">
+												<center><h2>Student PKU Profile</h2>
+											</div>
+											<hr>
+											
 											<div class="form-group">
 											 <label class="col-sm-3 control-label">Name</label>
-											 <div class="col-sm-8">
-											 <input type="text" name="studname" class="form-control" required placeholder="Full Name"/>
+											 <div class="col-sm-7">
+											 <input type="text" class="form-control"  placeholder="Full Name" readonly />
 											 </div>
 											</div>
 											
 											<div class="form-group">
 											 <label class="col-sm-3	control-label">Identity Card (IC.No)</label>
-											 <div class="col-sm-4">
-											 <input type="text" name="studIC" class="form-control" required data-parsley-type="number" placeholder="901212011234" />
+											 <div class="col-sm-3">
+											 <input type="text" class="form-control" placeholder="901212011234" readonly />
 											 </div>
 											 <label class="col-sm-1 control-label">Matric&nbsp;No.</label>
 											 <div class="col-sm-3">
-											 <input type="text" name="studMatric" class="form-control" required data-parsley-type="number" placeholder="ab160001" />
+											 <input type="text" class="form-control" placeholder="ab160001" readonly />
 											 </div>
 											</div>	
-											
-											<div class="form-group">
-											 <label class="col-sm-3 control-label">Programme</label>
-											 <div class="col-sm-3">
-											 <select class="form-control" name="program" required>
-												  <option value="" selected="selected"> - Select - </option>
-												  <option value="BIP">BIP</option>
-												  <option value="BIM">BIM</option>
-													<option value="BIS">BIS</option>
-													<option value="BIW">BIW</option>
-													<option value="BIT">BIT</option>
-											 </select>
-											 </div>
-											</div>
 
 											<div class="form-group">
-											 <label class="col-sm-3 control-label">Faculty</label>
-											 <div class="col-sm-3">
-											 <select class="form-control" name="faculty" required>
-												  <option value="" selected="selected"> - Select - </option>
-												  <option value="FKMP">FKMP</option>
-												  <option value="FPTP">FPTP</option>
-													<option value="FSKTM">FSKTM</option>
-													<option value="FKEE">FKEE</option>
-													<option value="FKASS">FKASS</option>
-													<option value="FTK">FTK</option>
-													<option value="FPTV">FPTV</option>
-													<option value="FSTPI">FSTPI</option>
-											 </select>
+											 <label class="col-sm-3 control-label">Programme</label>
+											 <div class="col-sm-7">
+											 <input type="text" class="form-control" placeholder="" readonly />
 											 </div>
 											</div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-lg-12 text-right">
-                                        <button class="btn btn-primary" type="submit" name="submit">Register</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- End Add New Student -->	
-					</div>
-				</div>	
+											
+											<div class="form-group">
+											 <label class="col-sm-3 control-label">Faculty</label>
+											 <div class="col-sm-7">
+											 <input type="text" class="form-control" placeholder="" readonly />
+											 </div>
+											</div>
+											
+											<div class="form-group">
+											 <label class="col-sm-3 control-label">Vision Test Status</label>
+											 <div class="col-sm-7">
+											<input type="text" class="form-control" name="pkuStatus" readonly />
+											 </div>
+											</div>
+												 
+						</form>
+						</div>
+						</div>
+						</div>
+							
+                    </div>
+                </div>
             </div>
             <!-- === END CONTENT === -->
             <!-- === BEGIN FOOTER === -->
@@ -288,6 +315,24 @@ include_once 'dbconfig.php';
 
 			<script type="text/javascript">
 				$('#form').parsley();
+			</script>
+			
+			<script>
+			function addRow()
+			{
+			   //add a row to the rows collection and get a reference to the newly added row
+			   var newRow = document.all("add").insertRow();
+
+			   var oCell = newRow.insertCell();
+			   oCell.innerHTML = "<input type='text' name='select'>";
+
+			   oCell = newRow.insertCell();
+			   oCell.innerHTML = "<input type='text' name='title'>";
+			   
+			   oCell = newRow.insertCell();
+			   oCell.innerHTML = "<input type='text' name='title'>";
+	  
+			}
 			</script>
             <!-- End JS -->
     </body>

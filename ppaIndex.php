@@ -1,6 +1,4 @@
 <?php
-	require_once "global_vars.php";
-
 	session_start();
 	
 	$matric = $_SESSION["username"];
@@ -11,52 +9,25 @@
 	$dbname = "sds";
 	
 	// Create connection
-	$conn = new mysqli(HOST, USER, '', DBNAME);
+	$conn = new mysqli($servername, $username, $password, $dbname);
 	// Check connection
 	if ($conn->connect_error) {
 		die("Connection failed: " . $conn->connect_error);
 	} 
 	$sql = "SELECT * FROM student WHERE matric_no = '$matric'";
 	$result = $conn->query($sql);
-	$countries = [
-	'' => '- Select -', 'Malaysia' => 'Malaysia', 'Australia' => 'Australia', 'Nigeria' => 'Nigeria', 'Other' => 'Other'
-	];
-	$marital_statuses = [
-	'' => '- Select -', 'Single' => 'Single', 'Married' => 'Married', 'Divorced' => 'Divorced'
-	];
-	
 	if ($result->num_rows > 0) {
-	$raw_arr = '';
 		// output data of each row
 		while($row = $result->fetch_assoc()) {
-		$stud_id = $row["stud_id"];
-		$name = $row["fullname"];
-		$ic = $row["nric"];
-		$matric = $row["matric_no"];
-		$program = $row["program"];
-		$faculty = $row["faculty"];
-		$race = $row["race"];
-		$religion = $row["religion"];
-		$state_of_birth = $row["state_of_birth"];
-		$state_of_residence = $row["state_of_residence"];
-		$type_of_dissability = $row["type_of_dissability"];
-		$height = $row["height"];
-		$address = $row["address"];
-		$poscode = $row["poscode"];
-		$state = $row["state"];
-		$tel_no = $row["tel_no"];
-		$hp_no = $row["hp_no"];
-		$gender = $row["gender"];
-		$date_of_birth = $row["date_of_birth"];
-		$citizenship = $row["citizenship"];
-		$marital_status = $row["marital_status"];
-		$oku = $row["oku"];
-		$color_blindness = $row["color_blindness"];
+			$name= $row["fullname"];
+			$ic= $row["nric"];
+			$matric= $row["matric_no"];
+			$program= $row["program"];
+			$faculty= $row["faculty"];
 			
-	}
-	$conn->query("UPDATE student SET raw ='$raw_arr' WHERE stud_id='$stud_id'");
+		}
 	} else {
-		echo "0 results";
+		//echo "0 results";
 	}
 	$conn->close();
 ?>
@@ -133,19 +104,32 @@
                     <div class="row">
                         <div class="col-md-12 no-padding">
                             <div class="visible-lg">
-                                <ul id="hornavmenu" class="nav navbar-nav">
+                                <ul id="hornavmenu" class="nav navbar-nav">									
 									<li>
-                                        <a href="studentRegister.php" class="fa-home">Register Profile</a>
+                                        <span class="fa-copy active">Student Profile</span>
+                                        <ul>
+                                            <li>
+                                                <a href="ppaIndex.php">Registered Profile</a>
+                                            </li>
+											<li>
+                                                <a href="ppa-upload.php">Uploaded Documents</a>
+                                            </li>
+                                            
+										</ul>
+                                    </li>
+									
+									<li>
+                                        <a href="ppa-pku.php" class="fa-home">PKU Profile</a>
                                     </li>
 									<li>
-                                        <a href="uploadDoc.php" class="fa-home">Upload Documents</a>
+                                        <a href="ppa-bursary.php" class="fa-home">Bursary Profile</a>
                                     </li>
 									<li>
-                                        <a href="#" class="fa-home">Download Documents</a>
+                                        <a href="ppa-register.php" class="fa-home">Enrollment</a>
                                     </li>
 									<li>
-                                        <a href="updateProfile.php" class="fa-home active">Update Profile</a>
-                                    </li>   
+                                        <a href="report.php" class="fa-home">Report</a>
+                                    </li> 
                                 </ul>
 								
 								<?php 
@@ -206,51 +190,57 @@
 											
 											<hr>
 											<div class="form-group">
+											 <label class="col-sm-3 control-label" >Testing</label>
+											 <div class="col-sm-7">
+											 <textarea id="qrcode" >
+											 </textarea>
+											 </div>
+											</div>
+											
+											<div class="form-group">
 											 <label class="col-sm-3 control-label">Name</label>
 											 <div class="col-sm-7">
-											 <input type="text" class="form-control" id="name" placeholder="Full Name" value = "<?php echo $name; ?>" readonly />
+											 <input type="text" class="form-control" id="name" placeholder="Full Name"/>
 											 </div>
 											</div>
 											
 											<div class="form-group">
 											 <label class="col-sm-3	control-label">Identity Card (IC.No)</label>
 											 <div class="col-sm-3">
-											 <input type="text" class="form-control" name="ic" placeholder="901212011234" value = "<?php echo $ic; ?>" readonly />
+											 <input type="text" id = "ic" class="form-control" name = "matric" placeholder="900101011234" />
 											 </div>
 											 <label class="col-sm-1 control-label">Matric&nbsp;No.</label>
 											 <div class="col-sm-3">
-											 <input type="text" class="form-control" name = "matric" placeholder="ab160001" value = "<?php echo $matric; ?>" readonly />
+											 <input type="text" id = "matric" class="form-control" name = "matric" placeholder="ab160001" />
 											 </div>
 											</div>	
 
 											<div class="form-group">
 											 <label class="col-sm-3 control-label">Programme</label>
 											 <div class="col-sm-7">
-											 <input type="text" class="form-control" name = "program" placeholder="" value = "<?php echo $program; ?>" readonly />
+											 <input type="text" class="form-control" name = "program" placeholder="" value="<?php echo $program; ?>"/>
 											 </div>
 											</div>
 											
 											<div class="form-group">
 											 <label class="col-sm-3 control-label">Faculty</label>
 											 <div class="col-sm-7">
-											 <input type="text" class="form-control" name = "faculty" placeholder="" value = "<?php echo $faculty; ?>" readonly />
+											 <input type="text" class="form-control" name = "faculty" placeholder=""/>
 											 </div>
 											</div>
 										</form>
 										
-										<form id="personalparticular" action = "studentUpdateValidate.php" method="POST" class="form-horizontal">
+										<form id="personalparticular" action = "studentRegisterValidate.php" method="POST" class="form-horizontal">
 											
 											<div class="form-group">
 											 <label class="col-sm-3 control-label">Gender</label>
 											 <div class="col-sm-7">
 											<label class="radio-inline col-sm-2">
-											
-											<!--<input type="hidden"  name = "matric2"  value = "<?php echo $matric; ?>" /> -->
-											
-											<input type="radio" name="gender" value ="Male" <?= strtolower($gender) == "male" ? 'checked' : '' ?>/>Male
+											<input type="hidden"  name = "matric2"  value = "<?php echo $matric; ?>" />
+											<input type="radio" name="gender" value = "Male" required data-parsley-required="true"/>Male
 											</label>
 											<label class="radio-inline">
-											<input type="radio" name="gender" value ="Female" <?= strtolower($gender) == "female" ? 'checked' : '' ?> />Female
+											<input type="radio" name="gender" value = "Female"/>Female
 											</label>
 											 </div>
 											</div>
@@ -258,45 +248,42 @@
 											<div class="form-group">
 											 <label class="col-sm-3 control-label">Date of Birth</label>
 											 <div class="col-sm-3">
-											 <input type="date" class="form-control" name ="date_of_birth" value = "<?php echo $date_of_birth; ?>"/>
+											 <input type="date" class="form-control" name ="date_of_birth" required placeholder=""/>
 											 </div>
 											</div>
 											
 											<div class="form-group">
 											 <label class="col-sm-3 control-label">Race</label>
 											 <div class="col-sm-3">
-											 <input type="text" class="form-control" name = "race"  value = "<?php echo $race; ?>"/>
+											 <input type="text" class="form-control" name = "race"  placeholder=""/>
 											 </div>
 											 <label class="col-sm-2 control-label">Religion</label>
 											 <div class="col-sm-3">
-											 <input type="text" name = "religion" class="form-control"  value = "<?php echo $religion; ?>"/>
+											 <input type="text" name = "religion" class="form-control"  placeholder=""/>
 											 </div>
 											</div>
 											 
 											<div class="form-group">
 											 <label class="col-sm-3 control-label">State of Birth</label>
 											 <div class="col-sm-3">
-											 <input type="text" class="form-control" name = "state_of_birth" value = "<?php echo $state_of_birth; ?>"/>
+											 <input type="text" class="form-control" name = "state_of_birth" placeholder=""/>
 											 </div>
 											</div>
 											
 											<div class="form-group">
 											 <label class="col-sm-3 control-label">Citizenship</label>
 											 <div class="col-sm-3">
-											 <select class="form-control" name="citizenship" >
-												  <?php
-													foreach ($countries as $key => $country) {
-													$selected = "";
-													if (strtolower($citizenship) == strtolower($country))
-														$selected = "selected='selected'";
-													echo "<option $selected value='$key'>$country</option>";
-													}
-													?>
+											 <select class="form-control" name="citizenship" required>
+												  <option selected="selected"> - Select - </option>
+												  <option value = "Malaysia">Malaysia</option>
+												  <option value = "Australia">Australia</option>
+													<option value = "Nigeria">Nigeria</option>
+												  <option value = "Other">Other</option>
 											 </select>
 											 </div>
 											 <label class="col-sm-2 control-label">State of Residence</label>
 											 <div class="col-sm-3">
-											 <input type="text" name = "state_of_residence" class="form-control" value = "<?php echo $state_of_residence; ?>"/>
+											 <input type="text" name = "state_of_residence" class="form-control"  placeholder=""/>
 											 </div>
 											</div>
 											
@@ -304,10 +291,10 @@
 											 <label class="col-sm-3 control-label">(OKU) Disability</label>
 											 <div class="col-sm-7">
 											<label class="radio-inline col-sm-2">
-												<input id="oku_yes" type="radio" name="oku" value = "Yes" <?= strtolower($oku) == 'yes' ? 'checked' : '' ?> onChange="findselected()">Yes
+												<input id="oku_yes" type="radio" name="oku" value = "Yes" onChange="findselected()">Yes
 											</label>
 											<label class="radio-inline">
-												<input id="oku_no" type="radio" name="oku" value = "No" <?= strtolower($oku) == 'no' ? 'checked' : '' ?> onChange="findselected()">No
+												<input id="oku_no" type="radio" name="oku" checked="checked" value = "No" onChange="findselected()">No
 											</label>
 											 </div>
 											</div>
@@ -315,14 +302,14 @@
 											<div class="form-group">
 											 <label class="col-sm-3 control-label">Types of Dissability</label>
 											 <div class="col-sm-3">
-											 <input id="inputtext" type="text" class="form-control" name = "type_of_dissability" value = "<?php echo $type_of_dissability; ?>"/>
+											 <input id="inputtext" type="text" class="form-control" name = "type_of_dissability" placeholder="none"/>
 											 </div>
 											</div>
 											
 											<div class="form-group">
 											 <label class="col-sm-3	control-label">Height(cm)</label>
 											 <div class="col-sm-3">
-											 <input type="text" class="form-control" name = "height" value = "<?php echo $height; ?>"/>
+											 <input type="text" class="form-control" name = "height" placeholder=""  />
 											 </div>
 											</div>
 											
@@ -330,14 +317,10 @@
 											 <label class="col-sm-3 control-label">Marital Status</label>
 											 <div class="col-sm-3">
 											 <select class="form-control" name = "marital_status">
-													<?php
-													foreach ($marital_statuses as $key => $status) {
-													$selected = "";
-													if ($status == $marital_status)
-														$selected = 'selected';
-													echo "<option value='$key' $selected>$status</option>";
-													}
-													?>
+												  <option value="" selected="selected"> - Select - </option>
+												  <option value = "Single">Single</option>
+												  <option value = "Married">Married</option>
+													<option value = "Divorced">Divorced</option>
 											 </select>
 											 </div>
 											</div>
@@ -346,10 +329,10 @@
 											 <label class="col-sm-3 control-label">Color Blindness</label>
 											 <div class="col-sm-7">
 											<label class="radio-inline col-sm-2">
-												<input id="oku_yes" type="radio" name="color_blindness" value = "Yes" <?= strtolower($oku) == 'yes' ? 'checked' : '' ?> onChange="findselected()">Yes
+												<input id="oku_yes" type="radio" name="color_blindness" value = "Yes" onChange="findselected()">Yes
 											</label>
 											<label class="radio-inline">
-												<input id="oku_no" type="radio" name="color_blindness" value = "No" <?= strtolower($oku) == 'no' ? 'checked' : '' ?> onChange="findselected()">No
+												<input id="oku_no" type="radio" name="color_blindness" value = "No" onChange="findselected()">No
 											</label>
 											 </div>
 											</div>
@@ -357,40 +340,32 @@
 											<div class="form-group">
 											 <label class="col-sm-3 control-label">Permanent Address</label>
 											 <div class="col-sm-8">
-											 <textarea class="form-control" name = "address" ><?php echo $address; ?></textarea>
+											 <textarea class="form-control" name = "address"></textarea>
 											 </div>
 											 </div>
 											 
 											 <div class="form-group">
 											 <label class="col-sm-3	control-label">Poscode</label>
 											 <div class="col-sm-3">
-											 <input type="text" class="form-control" name = "poscode" value = "<?php echo $poscode; ?>" />
+											 <input type="text" class="form-control" name = "poscode" placeholder=""  />
 											 </div>
 											 <label class="col-sm-2 control-label">State</label>
 											 <div class="col-sm-3">
-											 <input id="inputtext" type="text" class="form-control" name = "state" value = "<?php echo $state; ?>"/>
+											 <input id="inputtext" type="text" class="form-control" name = "state" placeholder="none"/>
 											 </div>
 											</div>
 											
 											<div class="form-group">
 											 <label class="col-sm-3	control-label">Telephone No.</label>
 											 <div class="col-sm-3">
-											 <input type="text" class="form-control" name = "tel_no" value = "<?php echo $tel_no; ?>"/>
+											 <input type="text" class="form-control" name = "tel_no" placeholder="071234567"  />
 											 </div>
 											 <label class="col-sm-2	control-label">Mobile No.</label>
 											 <div class="col-sm-3">
-											 <input type="text" class="form-control" name = "hp_no" value = "<?php echo $hp_no; ?>" />
+											 <input type="text" class="form-control" name = "hp_no" required data-parsley-type="number" placeholder="01234567890"  />
 											 </div>
 											</div>
-											<hr>
-	 
-											<div class="form-group">
-											 <div class="col-sm-offset-8 col-sm-9 m-t-15" style="margin:10px 0 0 0; float:right;">
-											 <button type="submit" name = "submit" class="btn btn-primary">Submit</button>
-											 <button type="reset" class="btn btn-default m-1-5" style="margin:0 0 0 20px;">Cancel</button>
-											 </div>
-											</div>
-												 
+											<hr>		 
 										</form>
 												
                                     </div>
@@ -432,63 +407,57 @@
 											 </div>
 											</div>
 											<hr>
-
-											 <div class="form-group">
-											 <div class="col-sm-offset-8 col-sm-9 m-t-15" style="margin:10px 0 0 0; float:right;">
-											 <button type="submit" name = "submit" class="btn btn-primary">Submit</button>
-											 <button type="reset" class="btn btn-default m-1-5" style="margin:0 0 0 20px;">Cancel</button>
-											 </div>
-											</div>	 
 										</form>	
                                     </div>
 									
                                     <div class="tab-pane fade in" id="working">
-                                        <form id="working" method="post" class="form-horizontal" >
-											
-											<div class="login-header margin-bottom-30">
-												<center><h2>Section A3: Working Experience & Co-Curricular Activities</h2>
-												<br/>
-												<h3>WORKING EXPERIENCE</h3>
-											</div>
-											
-											<hr>
-											
-											<div class="form-group">											
-											<div  class="table-responsive">
-											<div class="col-sm-12">
-											<table id="add" class="table table-striped table-bordered table-hover" style="table-layout:auto">
-												<thead>
-													<tr>
-													<th scope="col">Designation</th>
-													<th scope="col">Company Name</th>
-													<th scope="col">Company Address</th>
-													<th scope="col">Start Date</th>
-													<th scope="col">End Date</th>
-													</tr>
-													</thead>
-													<tbody>
-													<tr>
-													<td><input name="designation" type="text" id="designation"/></td>
-													<td><input name="companyName" type="text" id="company name"/></td>
-													<td><input name="address" type="text" id="adress"/></td>		
-													<td><input name="stardate" type="date" id="startdate"/></td>	
-													<td><input name="enddate" type="date" id="enddate"/></td>	 
-													</tr>
-													</tbody>
-											</table>
-											<button class="btn btn-primary" name="add" onclick='addRow();' style="clear:both; float:right; margin:10px 0 0 180%;">Add</button>
-											</div>
-											</div>
-											</div>
-											<hr>
-
-											<div class="form-group">
-											 <div class="col-sm-offset-8 col-sm-9 m-t-15" style="margin:10px 0 0 0; float:right;">
-											 <button type="submit" name = "submit" class="btn btn-primary">Submit</button>
-											 <button type="reset" class="btn btn-default m-1-5" style="margin:0 0 0 20px;">Cancel</button>
-											 </div>
-											</div>	 
-										</form>	
+										<div class="panel panel-success">
+												<div class="panel-heading">
+													Working Experience Details
+												</div>
+                                        <div class="panel-body">
+													<div class="table-responsive">
+														<table id="" class="table table-striped table-bordered table-hover">
+															<thead>
+																<tr>
+																	<th scope="col">#</th>
+																	<th scope="col">Designation</th>
+																	<th scope="col">Company Name</th>
+																	<th scope="col">Company Address</th>
+																	<th scope="col">Start Date</th>
+																	<th scope="col">End Date</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td scope="col">1</td>
+																	<td scope="col"></td>
+																	<td scope="col"></td>
+																	<td scope="col"></td>
+																	<td scope="col"></td>
+																	<td scope="col"></td>
+																</tr>
+																<tr>
+																	<td scope="col">2</td>
+																	<td scope="col"></td>
+																	<td scope="col"></td>
+																	<td scope="col"></td>
+																	<td scope="col"></td>
+																	<td scope="col"></td>
+																</tr>
+																<tr>
+																	<td scope="col">3</td>
+																	<td scope="col"></td>
+																	<td scope="col"></td>
+																	<td scope="col"></td>
+																	<td scope="col"></td>
+																	<td scope="col"></td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+										</div>
+										</div>
                                     </div>
 									
                                     <div class="tab-pane fade in" id="parent_guardian">
@@ -565,15 +534,7 @@
 											 <input type="text" class="form-control" name = "guardianWork" placeholder="" />
 											 </div>
 											</div>
-											<hr>
-
-
-											<div class="form-group">
-											 <div class="col-sm-offset-8 col-sm-9 m-t-15" style="margin:10px 0 0 0; float:right;">
-											 <button type="submit" name = "submit" class="btn btn-primary">Submit</button>
-											 <button type="reset" class="btn btn-default m-1-5" style="margin:0 0 0 20px;">Cancel</button>
-											 </div>
-											</div>	 
+											<hr> 
 										</form>	
                                     </div>
 									
@@ -596,7 +557,7 @@
 												  <br/><br/>
 													<center><div class="well" class="form-group">	
 													 <label>DATE</label>
-													 <input type="date" class="form-control"  style="width:30%;" required/>
+													 <input type="text" class="form-control"  style="width:30%;" readonly />
 													 </div>
 													 <hr>
 													<p style="float:right"> **This is a computer generated document no signature is needed **</p>
@@ -604,14 +565,7 @@
 												  
 											</div>
 											</div>
-											<hr>
-
-											<div class="form-group">
-											 <div class="col-sm-offset-8 col-sm-9 m-t-15" style="margin:10px 0 0 0; float:right;">
-											 <button type="submit" name = "submit" class="btn btn-primary">Submit</button>
-											 <button type="reset" class="btn btn-default m-1-5" style="margin:0 0 0 20px;">Cancel</button>
-											 </div>
-											</div>	 
+											<hr> 
 										</form>	
                                     </div>
 									
@@ -746,6 +700,18 @@
 			   oCell.innerHTML = "<input type='text' name='title'>";
 	  
 			}
+			</script>
+
+			<script>
+				$("#qrcode").change(function(){
+					var qrcode = JSON.parse($("#qrcode").val());
+					//alert("Citizen: "+qrcode.citizenship);
+					//console.log(qrcode);
+					$("#name").val(qrcode.fullname);
+					$("#ic").val(qrcode.nric);
+					$("#matric").val(qrcode.matric_no);
+				});
+				
 			</script>
             <!-- End JS -->
     </body>

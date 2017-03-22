@@ -2,5 +2,5 @@
 
 define('HOST', 'localhost');
 define('USER', 'root');
-define('PASSWORD', 'password');
+define('PASSWORD', '');
 define('DBNAME', 'sds');
